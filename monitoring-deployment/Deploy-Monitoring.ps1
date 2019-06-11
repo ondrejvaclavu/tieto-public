@@ -2,6 +2,7 @@
 
 $subscriptionName = "Tieto Azure Public Cloud Operations Test"
 $resourceGroupName = "ov-la-deployment-test1-rg"
+$resourceGroupLocation = "West Europe"
 $templateUri = "https://raw.githubusercontent.com/ondrejvaclavu/tieto-public/master/monitoring-deployment/azuredeploy.json"
 $templateParameterUri = "https://raw.githubusercontent.com/ondrejvaclavu/tieto-public/master/monitoring-deployment/azuredeploy.parameters.json"
 
@@ -12,6 +13,13 @@ catch {Connect-AzAccount}
 # Set context to specified subscription
 if ((Get-AzContext).Subscription.Name -ne $subscriptionName) {
     Set-AzContext -SubscriptionName $subscriptionName
+}
+
+Get-AzResourceGroup -Name $resourceGroupName -ErrorVariable notPresent -ErrorAction SilentlyContinue
+
+if ($notPresent)
+{
+    New-AzResourceGroup -Name $resourceGroupName -Location $resourceGroupLocation
 }
 
 # Start the deployment
