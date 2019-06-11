@@ -132,7 +132,7 @@
                 {
                     "type": "datasources",
                     "apiVersion": "2015-11-01-preview",
-                    "name": "VMInsights-LogicalDisk-FreeMegabytes ",
+                    "name": "VMInsights-LogicalDisk-FreeMegabytes",
                     "dependsOn": [
                         "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
