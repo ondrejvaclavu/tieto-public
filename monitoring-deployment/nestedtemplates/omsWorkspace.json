@@ -59,7 +59,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-LogicalDisk-Avg-DiskSecTransfer",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "WindowsPerformanceCounter",
                     "properties": {
@@ -74,7 +74,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-LogicalDisk-Disk-BytesSec",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "WindowsPerformanceCounter",
                     "properties": {
@@ -89,7 +89,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-LogicalDisk-Disk-ReadBytesSec",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "WindowsPerformanceCounter",
                     "properties": {
@@ -104,7 +104,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-LogicalDisk-Disk-WriteBytesSec",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "WindowsPerformanceCounter",
                     "properties": {
@@ -119,7 +119,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-Logical-Disk-Linux",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "LinuxPerformanceObject",
                     "properties": {
@@ -159,7 +159,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-Memory-Linux",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "LinuxPerformanceObject",
                     "properties": {
@@ -178,7 +178,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-Network",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "LinuxPerformanceObject",
                     "properties": {
@@ -200,7 +200,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-Processor-Pct-Processor-Time-Linux",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "LinuxPerformanceObject",
                     "properties": {
@@ -219,7 +219,7 @@
                     "apiVersion": "2015-11-01-preview",
                     "name": "DataSource_LinuxPerformanceCollection",
                     "dependsOn": [
-                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
                     ],
                     "kind": "LinuxPerformanceCollection",
                     "properties": {
