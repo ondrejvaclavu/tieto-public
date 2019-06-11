@@ -1,0 +1,255 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "omsWorkspaceName": {
+            "type": "string",
+            "metadata": {
+                "description": "Assign a name for the Log Analytic Workspace Name"
+            }
+        },
+        "omsWorkspaceRegion": {
+            "type": "string",
+            "defaultValue": "West Europe",
+            "allowedValues": [
+                "Australia Southeast",
+                "East US",
+                "Japan East",
+                "Southeast Asia",
+                "UK South",
+                "West Central US",
+                "West Europe",
+                "North Europe"
+            ],
+            "metadata": {
+                "description": "Specify the region for your Workspace"
+            }
+        }
+    },
+    "variables": {
+        "batch1": {
+            "solutions": [
+                {
+                    "name": "[concat('Updates', '(', parameters('omsWorkspaceName'), ')')]",
+                    "marketplaceName": "Updates"
+                },
+                {
+                    "name": "[concat('AzureAutomation', '(', parameters('omsWorkspaceName'), ')')]",
+                    "marketplaceName": "AzureAutomation"
+                }
+            ]
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-03-15-preview",
+            "location": "[parameters('omsWorkspaceRegion')]",
+            "name": "[parameters('omsWorkspaceName')]",
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "comments": "Log Analytics workspace",
+            "properties": {
+                "sku": {
+                        "name": "pergb2018"
+                    },
+                "retentionInDays": 180
+            },
+            "resources": [
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-Avg-DiskSecTransfer",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Avg. Disk sec/Transfer"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-Disk-BytesSec",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Disk Bytes/sec"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-Disk-ReadBytesSec",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Disk Read Bytes/sec"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-Disk-WriteBytesSec",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Disk Write Bytes/sec"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-Logical-Disk-Linux",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "LinuxPerformanceObject",
+                    "properties": {
+                        "objectName": "Logical Disk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "performanceCounters": [
+                            {
+                                "counterName": "% Used Space"
+                            },
+                            {
+                                "counterName": "Disk Read Bytes/sec"
+                            },
+                            {
+                                "counterName": "Disk Reads/sec"
+                            },
+                            {
+                                "counterName": "Disk Transfers/sec"
+                            },
+                            {
+                                "counterName": "Disk Write Bytes/sec"
+                            },
+                            {
+                                "counterName": "Disk Writes/sec"
+                            },
+                            {
+                                "counterName": "Free Megabytes"
+                            },
+                            {
+                                "counterName": "Logical Disk Bytes/sec"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-Memory-Linux",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "LinuxPerformanceObject",
+                    "properties": {
+                        "objectName": "Memory",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "performanceCounters": [
+                            {
+                                "counterName": "Available MBytes Memory"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-Network",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "LinuxPerformanceObject",
+                    "properties": {
+                        "objectName": "Network",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "performanceCounters": [
+                            {
+                                "counterName": "Total Bytes Received"
+                            },
+                            {
+                                "counterName": "Total Bytes Transmitted"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-Processor-Pct-Processor-Time-Linux",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "LinuxPerformanceObject",
+                    "properties": {
+                        "objectName": "Processor",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "performanceCounters": [
+                            {
+                                "counterName": "% Processor Time"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "DataSource_LinuxPerformanceCollection",
+                    "dependsOn": [
+                        "/subscriptions/8e28cad6-cfdf-428b-8f1e-ecd760dd844d/resourcegroups/tm-attune-la-rg/providers/microsoft.operationalinsights/workspaces/tm-attune-la-workspace"
+                    ],
+                    "kind": "LinuxPerformanceCollection",
+                    "properties": {
+                        "state": "Enabled"
+                    }
+                }
+            ]
+        },
+        {
+            "apiVersion": "2015-11-01-preview",
+            "type": "Microsoft.OperationsManagement/solutions",
+            "name": "[concat(variables('batch1').solutions[copyIndex()].Name)]",
+            "location": "[parameters('omsWorkspaceRegion')]",
+            "dependsOn": [
+                "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+            ],
+            "copy": {
+                "name": "solutionCopy",
+                "count": "[length(variables('batch1').solutions)]"
+            },
+            "properties": {
+                "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('omsWorkspaceName'))]"
+            },
+            "plan": {
+                "name": "[variables('batch1').solutions[copyIndex()].name]",
+                "product": "[concat('OMSGallery/', variables('batch1').solutions[copyIndex()].marketplaceName)]",
+                "promotionCode": "",
+                "publisher": "Microsoft"
+            }
+        }
+    ],
+    "outputs": {}
+}
