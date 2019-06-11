@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "omsWorkspaceName": {
-            "value": "tm-demo-la-workspace"
+            "value": "tm-test-la-workspace"
         },
         "omsWorkspaceRegion": {
             "value": "West Europe"
         },
         "omsAutomationAccountName": {
-            "value": "tm-demo-la-automation"
+            "value": "tm-test-la-automation"
         },
         "omsAutomationRegion": {
             "value": "West Europe"
