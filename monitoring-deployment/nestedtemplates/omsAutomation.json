@@ -123,6 +123,19 @@
           }
         }
       ]
+    },
+    {
+        "type": "Microsoft.OperationalInsights/workspaces/linkedServices",
+        "apiVersion": "2015-11-01-preview",
+        "name": "[concat(parameters('omsWorkspaceName'), '/' , 'Automation')]",
+        "location": "[parameters('omsAutomationRegion')]",
+        "dependsOn": [
+          "[concat('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]",
+          "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+        ],
+        "properties": {
+            "resourceId": "[resourceId('Microsoft.Automation/automationAccounts/', parameters('omsAutomationAccountName'))]"
+        }
     }
   ],
   "outputs": {}
