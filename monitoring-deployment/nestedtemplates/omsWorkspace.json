@@ -57,6 +57,126 @@
                 {
                     "type": "datasources",
                     "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-NetworkAdapter-PercentProcessorTime",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "Processor",
+                        "instanceName": "_Total",
+                        "intervalSeconds": 60,
+                        "counterName": "% Processor Time"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-NetworkAdapter-BytesSent-sec",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "Network Adapter",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Bytes Sent/sec"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-NetworkAdapter-BytesReceived-sec",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "Network Adapter",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Bytes Received/sec"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-Memory-AvailableMBytes",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "Memory",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Available MBytes"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-Memory-PercentCommittedBytesInUse",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "Memory",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "% Committed Bytes In Use"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-FreeMegabytes ",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Free Megabytes"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-PercentFreeSpace",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "% Free Space"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
+                    "name": "VMInsights-LogicalDisk-CurrentQueueDiskLength",
+                    "dependsOn": [
+                        "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
+                    ],
+                    "kind": "WindowsPerformanceCounter",
+                    "properties": {
+                        "objectName": "LogicalDisk",
+                        "instanceName": "*",
+                        "intervalSeconds": 60,
+                        "counterName": "Current Disk Queue Length"
+                    }
+                },
+                {
+                    "type": "datasources",
+                    "apiVersion": "2015-11-01-preview",
                     "name": "VMInsights-LogicalDisk-Avg-DiskSecTransfer",
                     "dependsOn": [
                         "[concat('Microsoft.OperationalInsights/workspaces/', parameters('omsWorkspaceName'))]"
