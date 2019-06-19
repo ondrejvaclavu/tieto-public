@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Tieto Azure Managed Framework Monitoring deployment",
+  "description": "This solution deploys complete monitoring framework.",
+  "summary": "Used for monitoring Azure environment.",
+  "githubUsername": "ondrejvaclavu",
+  "dateUpdated": "2019-06-19"
+}
