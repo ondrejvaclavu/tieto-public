@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "value": "tm-raasdl-la-workspace"
+        },
+        "automationAccountName": {
+            "value": "tm-raasdl-la-automation"
+        },
+        "enabledSolutions": {
+        "value": ["vm-generic","vm-windows","azuresql-basic"]
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workspaceName": {
+            "value": "tm-test23-la-workspace"
+        },
+        "automationAccountName": {
+            "value": "tm-test23-la-automation"
+        },
+        "enabledSolutions": {
+        "value": ["all"]
+        },
+        "criticalAlertEmailReceivers": {
+            "value": [
+                {
+                    "name": "Email Tieto Default",
+                    "emailAddress": "tietomanagedazurealerts@tieto.com"
+                },
+                {
+                    "name": "Email Ondrej Vaclavu 2",
+                    "emailAddress": "ondrej.vaclavu@tieto.com"
+                }
+            ]
+        }
+    }
+}

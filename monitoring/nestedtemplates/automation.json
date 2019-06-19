@@ -1,0 +1,99 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "automationAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "Assign a name for the Automation account"
+      }
+    },
+    "automationRegion": {
+      "type": "string",
+      "metadata": {
+        "description": "Specify the region for your Automation account"
+      }
+    },
+    "workspaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Assign a name for the OMS workspace"
+      }
+    }
+  },
+  "variables": {
+    "azureSubscriptionId": "AzureSubscriptionId",
+    "workspaceId": "workspaceId",
+    "workspaceKey": "workspacekey"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-10-31",
+      "location": "[parameters('automationRegion')]",
+      "name": "[parameters('automationAccountName')]",
+      "type": "Microsoft.Automation/automationAccounts",
+      "comments": "Automation account for OMS",
+      "properties": {
+        "sku": {
+          "name": "Basic"
+        }
+      },
+      "resources": [
+        {
+          "name": "[variables('workspaceId')]",
+          "type": "variables",
+          "apiVersion": "2015-10-31",
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+          ],
+          "tags": {},
+          "properties": {
+            "description": "OMS Workspace Id",
+            "value": "[concat('\"',reference(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')),'2015-11-01-preview').customerId,'\"')]"
+          }
+        },
+        {
+          "name": "[variables('workspaceKey')]",
+          "type": "variables",
+          "apiVersion": "2015-10-31",
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+          ],
+          "tags": {},
+          "properties": {
+            "description": "OMS Workspace key",
+            "value": "[concat('\"',listKeys(resourceId('Microsoft.OperationalInsights/workspaces/', parameters('workspaceName')), '2015-11-01-preview').primarySharedKey,'\"')]"
+          }
+        },
+        {
+          "name": "[variables('azureSubscriptionId')]",
+          "type": "variables",
+          "apiVersion": "2015-10-31",
+          "dependsOn": [
+            "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+          ],
+          "tags": {},
+          "properties": {
+            "description": "Azure Subscription Id",
+            "isEncrypted": false,
+            "type": "string",
+            "value": "[concat('\"',subscription().subscriptionId,'\"')]"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/linkedServices",
+      "apiVersion": "2015-11-01-preview",
+      "name": "[concat(parameters('workspaceName'), '/' , 'Automation')]",
+      "location": "[parameters('automationRegion')]",
+      "dependsOn": [
+        "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+      ],
+      "properties": {
+          "resourceId": "[resourceId('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'))]"
+      }
+    }
+  ],
+  "outputs": {}
+}

@@ -1,0 +1,155 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": ["tm-<environment>-la-workspace"],
+      "metadata": {
+        "description": "Assign a name for the Log Analytic Workspace"
+      }
+    },
+    "automationAccountName": {
+      "type": "string",
+      "defaultValue": ["tm-<environment>-la-automation"],
+      "metadata": {
+        "description": "Assign a name for the Automation account"
+      }
+    },
+    "enabledSolutions": {
+      "type": "array",
+      "defaultValue": ["all"],
+      "metadata": {
+        "description": "Deployed solutions. Use 'all' to deploy alerts for all solutions."
+      }
+    },
+    "criticalAlertWebhooks": {
+      "type": "array",
+      "defaultValue": [
+        {
+        "name": "ServiceNow",
+        "serviceUri": "https://Event_Management_Azure:KSRQYCYkWY4wKm2uSA@tieto.service-now.com/api/global/em/inbound_event?source=AzureLogAnalyticsEvent"
+        }
+      ] 
+    },
+    "criticalAlertEmailReceivers": {
+      "type": "array",
+      "defaultValue": [
+        {
+        "name": "Email Tieto Default",
+        "emailAddress": "tietomanagedazurealerts@tieto.com"
+        }
+      ]
+    },
+    "warningAlertWebhooks": {
+      "type": "array",
+      "defaultValue": [
+        {
+        "name": "ServiceNow",
+        "serviceUri": "https://Event_Management_Azure:KSRQYCYkWY4wKm2uSA@tieto.service-now.com/api/global/em/inbound_event?source=AzureLogAnalyticsEvent"
+        }
+      ] 
+    },
+    "warningAlertEmailReceivers": {
+      "type": "array",
+      "defaultValue": [
+        {
+        "name": "Email Tieto Default",
+        "emailAddress": "tietomanagedazurealerts@tieto.com"
+        }
+      ]
+    }
+  },
+  "variables": {
+    "templateLocationUri": "https://tmfw-functions.azurewebsites.net/getgithubrepo/1a67d82b2828207e5b3642cfd09cf29f08ae82a7/tieto-public-cloud/azure-managed-framework/master/monitoring",
+    "nestedTemplates": {
+      "automation": "[concat(variables('templateLocationUri'), '/nestedtemplates/automation.json')]",
+      "workspace": "[concat(variables('templateLocationUri'), '/nestedtemplates/workspace.json')]",
+      "alerts": "[concat(variables('templateLocationUri'), '/alerts/monitoring-logalerts.json')]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "name": "workspace",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nestedTemplates').workspace]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "workspaceName": {
+            "value": "[parameters('workspaceName')]"
+          },
+          "workspaceRegion": {
+            "value": "[resourceGroup().location]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "name": "automation",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'workspace')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nestedTemplates').automation]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "automationAccountName": {
+            "value": "[parameters('automationAccountName')]"
+          },
+          "automationRegion": {
+            "value": "[resourceGroup().location]"
+          },
+          "workspaceName": {
+            "value": "[parameters('workspaceName')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "name": "alerts",
+      "dependsOn": [
+        "[concat('Microsoft.Resources/deployments/', 'workspace')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('nestedTemplates').alerts]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "workspaceName": {
+            "value": "[parameters('workspaceName')]"
+          },
+          "enabledSolutions": {
+            "value": "[parameters('enabledSolutions')]"
+          },
+          "criticalAlertEmailReceivers": {
+            "value": "[parameters('criticalAlertEmailReceivers')]"
+          },
+          "criticalAlertWebhooks": {
+            "value": "[parameters('criticalAlertWebhooks')]"
+          },
+          "warningAlertEmailReceivers": {
+            "value": "[parameters('warningAlertEmailReceivers')]"
+          },
+          "warningAlertWebhooks": {
+            "value": "[parameters('warningAlertWebhooks')]"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": { }
+}
