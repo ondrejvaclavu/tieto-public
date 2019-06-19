@@ -18,7 +18,7 @@ Monitoring framework deploys the following resources:
 ## Monitoring framework deployment
 Use **Deploy to Azure** button to deploy monitoring framework.
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Ftmfw-functions.azurewebsites.net%2Fgetgithubrepo%2F1a67d82b2828207e5b3642cfd09cf29f08ae82a7%2Ftieto-public-cloud%2Fazure-managed-framework%2Fmaster%2Fmonitoring%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fondrejvaclavu%2Ftieto-public%2Fmaster%2Fmonitoring%2Fazuredeploy.json" target="_blank">
 <img src="https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png"/>
 </a>
 
